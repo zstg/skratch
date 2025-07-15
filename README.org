@@ -1,0 +1,78 @@
+#+TITLE: skratch.el
+#+AUTHOR: ZeStig
+#+EMAIL: zestig@duck.com
+#+OPTIONS: toc:nil num:nil
+#+LANGUAGE: en
+
+* skratch.el - Manage persistent scratch buffers in Emacs
+
+~skratch.el~ provides persistent scratch buffers in Emacs by:
+- Saving all scratch buffers automatically in the background
+- Letting you create new, numbered scratch buffers (e.g. *scratch2*, *scratch3*)
+- Allowing you to re-open previously saved scratch sessions
+- Supporting recovery of the most recently used or latest buffer
+
+Designed for users who rely on scratch buffers for temporary notes, experimentation, or work-in-progress coding.
+
+** Features
+- Auto-saving of all ~*scratch*~-like buffers every few seconds
+- Persistent storage in ~~/.config/emacs/.scratch/~ (customizable)
+- Easily create new numbered scratch buffers
+- Browse and reopen past scratch sessions
+- Open the most recent or most recently used scratch buffer
+
+** Installation
+
+1. Clone or download this repo:
+
+   #+begin_src shell
+   git clone https://github.com/zstg/skratch ~/.emacs.d/lisp/skratch
+   #+end_src
+
+2. Add the following to your Emacs init file:
+
+   #+begin_src emacs-lisp
+   (add-to-list 'load-path "~/.emacs.d/lisp/skratch")
+   (require 'skratch)
+   #+end_src
+
+   Or, with ~use-package~:
+
+   #+begin_src emacs-lisp
+   (use-package skratch
+     :load-path "~/.emacs.d/lisp/skratch"
+     :commands (skratch-create skratch-open skratch-open-latest skratch-open-recent))
+   #+end_src
+
+   Or ~use-package~ with ~vc~:
+   #+begin_src emacs-lisp
+   (use-package skratch
+     :vc (:url "https://github.com/zstg/skratch" :branch main))
+   #+end_src 
+** Usage
+
+- ~M-x skratch-create~ :: Create a new numbered scratch buffer
+- ~M-x skratch-open~ :: Choose and open a saved scratch buffer
+- ~M-x skratch-open-latest~ :: Jump to the latest numbered scratch buffer
+- ~M-x skratch-open-recent~ :: Switch to the most recently used scratch buffer
+
+** Configuration
+
+Customize the location where scratch buffers are saved:
+
+#+begin_src emacs-lisp
+(setq skratch-save-dir (expand-file-name "~/.emacs.d/scratch-buffers/"))
+#+end_src
+
+** Notes
+
+- Buffers are saved every 2 seconds of Emacs idle time.
+- Only scratch buffers matching the pattern ~*scratch*~, ~*scratch2*~, etc. are persisted.
+
+** License
+
+GPL License. See [[file:LICENSE][LICENSE]] for details.
+
+** Contributing
+
+Feel free to open issues or pull requests. Suggestions and improvements are always welcome.
